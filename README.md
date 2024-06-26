@@ -80,5 +80,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For any questions or suggestions, please contact:
 
-- **Your Name** - [apalominobaile@gmail.com](mailto:apalominobaile@gmail.com)
+- **Alfonso** - [apalominobaile@gmail.com](mailto:apalominobaile@gmail.com)
 - **Project Link** - https://github.com/jalfpb/puretask
