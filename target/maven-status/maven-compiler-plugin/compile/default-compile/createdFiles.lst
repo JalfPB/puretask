@@ -4,6 +4,7 @@ module-info.class
 com\alfonsopb\puretask\Database.class
 com\alfonsopb\puretask\TaskDAO.class
 com\alfonsopb\puretask\Task.class
+com\alfonsopb\puretask\TaskManagerController$2.class
 com\alfonsopb\puretask\TaskManagerController.class
 com\alfonsopb\puretask\TaskManagerController$1.class
 com\alfonsopb\puretask\App.class

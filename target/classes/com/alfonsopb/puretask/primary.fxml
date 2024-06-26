@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alfonsopb.puretask.TaskManagerController">
-    <ListView fx:id="listView" />
-    <TextField fx:id="titleField" promptText="Title" />
-    <TextArea fx:id="descriptionField" promptText="Description" />
-    <Button text="Add Task" onAction="#handleAddTask" />
+    <TabPane>
+        <Tab text="All Tasks">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <ListView fx:id="allTasksListView" />
+                <TextField fx:id="titleField" promptText="Title" />
+                <TextArea fx:id="descriptionField" promptText="Description" />
+                <Button text="Add Task" onAction="#handleAddTask" />
+                <Button text="Complete Task" onAction="#handleCompleteTask" />
+                <Button text="Edit Task" onAction="#handleEditTask" />
+                <Button text="Delete Task" onAction="#handleDeleteTask" />
+            </VBox>
+        </Tab>
+        <Tab text="Completed Tasks">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <ListView fx:id="completedTasksListView" />
+            </VBox>
+        </Tab>
+    </TabPane>
 </VBox>
+

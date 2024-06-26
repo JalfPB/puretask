@@ -17,23 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskDAO {
-    public void addTask(Task task) {
-        String sql = "INSERT INTO tasks(title, description, completed) VALUES(?,?,?)";
-
-        try (Connection conn = Database.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, task.getTitle());
-            pstmt.setString(2, task.getDescription());
-            pstmt.setBoolean(3, task.isCompleted());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
     
     public List<Task> getAllTasks() {
         List<Task> tasks = new ArrayList<>();
-        String sql = "SELECT id, title, description, completed FROM tasks";
+        String sql = "SELECT * FROM tasks";
 
         try (Connection conn = Database.connect();
              Statement stmt = conn.createStatement();
@@ -51,14 +38,31 @@ public class TaskDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return tasks;
     }
-    
+
+    public void addTask(Task task) {
+        String sql = "INSERT INTO tasks(title, description, completed) VALUES(?, ?, ?)";
+
+        try (Connection conn = Database.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, task.getTitle());
+            pstmt.setString(2, task.getDescription());
+            pstmt.setBoolean(3, task.isCompleted());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void updateTask(Task task) {
         String sql = "UPDATE tasks SET title = ?, description = ?, completed = ? WHERE id = ?";
 
         try (Connection conn = Database.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setString(1, task.getTitle());
             pstmt.setString(2, task.getDescription());
             pstmt.setBoolean(3, task.isCompleted());
@@ -69,11 +73,36 @@ public class TaskDAO {
         }
     }
     
+    public List<Task> getCompletedTasks() {
+        List<Task> tasks = new ArrayList<>();
+        String sql = "SELECT * FROM tasks WHERE completed = true";
+
+        try (Connection conn = Database.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Task task = new Task(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getBoolean("completed")
+                );
+                tasks.add(task);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return tasks;
+    }
+    
     public void deleteTask(int id) {
         String sql = "DELETE FROM tasks WHERE id = ?";
 
         try (Connection conn = Database.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
