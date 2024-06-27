@@ -45,20 +45,19 @@ cd puretask
 ## Project Structure
 
 ```
-src/
+puretask/
 |-- main/
-|   |-- java/
-|   |   |-- com/
-|   |   |   |-- example/
-|   |   |   |   |-- TaskManagerApp.java
-|   |   |   |   |-- TaskManagerController.java
-|   |   |   |   |-- Task.java
-|   |   |   |   |-- TaskDAO.java
-|   |   |   |   |-- Database.java
-|   |-- resources/
-|       |-- com/
-|           |-- example/
-|               |-- primary.fxml
+|   |-- Source Packages/
+|   |   |-- com.alfonsopb.puretask/
+|   |   |   |-- TaskManagerApp.java
+|   |   |   |-- TaskManagerController.java
+|   |   |   |-- Task.java
+|   |   |   |-- TaskDAO.java
+|   |   |   |-- Database.java
+|   |-- Other Sources/
+|       |-- com.alfonsopb.puretask/
+|           |-- primary.fxml
+|           |-- taskDetails.fxml
 db/
 ```
 
