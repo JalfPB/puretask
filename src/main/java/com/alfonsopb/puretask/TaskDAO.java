@@ -97,6 +97,30 @@ public class TaskDAO {
         return tasks;
     }
     
+    public List<Task> getIncompletedTasks() {
+        List<Task> tasks = new ArrayList<>();
+        String sql = "SELECT * FROM tasks WHERE completed = false";
+
+        try (Connection conn = Database.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Task task = new Task(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getBoolean("completed")
+                );
+                tasks.add(task);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return tasks;
+    }
+    
     public void deleteTask(int id) {
         String sql = "DELETE FROM tasks WHERE id = ?";
 

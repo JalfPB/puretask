@@ -18,6 +18,7 @@
                 <Button text="Complete Task" onAction="#handleCompleteTask" />
                 <Button text="Edit Task" onAction="#handleEditTask" />
                 <Button text="Delete Task" onAction="#handleDeleteTask" />
+                <Button text="Show Details" onAction="#handleShowTaskDetails" />
             </VBox>
         </Tab>
         <Tab text="Completed Tasks">
@@ -26,6 +27,14 @@
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
                 <ListView fx:id="completedTasksListView" />
+            </VBox>
+        </Tab>
+        <Tab text="Incompleted Tasks">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <ListView fx:id="incompletedTasksListView" />
             </VBox>
         </Tab>
     </TabPane>
