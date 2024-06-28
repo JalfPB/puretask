@@ -20,6 +20,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);
         stage.setTitle("Task Manager");
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.show();
     }
 

@@ -13,12 +13,14 @@ public class Task {
     private String title;
     private String description;
     private boolean completed;
+    private int categoryId;
 
-    public Task(int id, String title, String description, boolean completed) {
+    public Task(int id, String title, String description, boolean completed,int categoryId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.categoryId = categoryId;
     }
 
     public int getId() {
@@ -51,6 +53,14 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+    
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
     }
 
 }

@@ -18,8 +18,8 @@ public class Database {
         try {
             conn = DriverManager.getConnection(URL);
             if (conn != null) {
-                // Verificar y crear la tabla si no existe
-                createTable(conn);
+                // Verificar y crear las tablas si no existen
+                createTables(conn);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -27,16 +27,24 @@ public class Database {
         return conn;
     }
 
-    private static void createTable(Connection conn) {
-        String sql = "CREATE TABLE IF NOT EXISTS tasks (\n"
-                   + " id integer PRIMARY KEY AUTOINCREMENT,\n"
-                   + " title text NOT NULL,\n"
-                   + " description text,\n"
-                   + " completed boolean\n"
-                   + ");";
+    private static void createTables(Connection conn) {
+        String createTasksTable = "CREATE TABLE IF NOT EXISTS tasks (\n"
+                                + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                                + " title TEXT NOT NULL,\n"
+                                + " description TEXT,\n"
+                                + " completed BOOLEAN,\n"
+                                + " category_id INTEGER,\n"
+                                + " FOREIGN KEY (category_id) REFERENCES categories(id)\n"
+                                + ");";
+
+        String createCategoriesTable = "CREATE TABLE IF NOT EXISTS categories (\n"
+                                     + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                                     + " name TEXT NOT NULL UNIQUE\n"
+                                     + ");";
 
         try (Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
+            stmt.execute(createTasksTable);
+            stmt.execute(createCategoriesTable);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

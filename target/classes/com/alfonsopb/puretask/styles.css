@@ -1,0 +1,33 @@
+/* styles.css */
+
+/* Estilo para el VBox principal */
+.main-vbox {
+    -fx-padding: 20px; /* Padding interior */
+    -fx-spacing: 10px; /* Espacio entre hijos */
+}
+
+/* Estilo para los Tabs */
+.tab-pane {
+    -fx-tab-min-width: 120px; /* Ancho mínimo de las pestañas */
+}
+
+/* Estilo para los botones */
+.button {
+    -fx-padding: 8px 16px; /* Padding interno */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+}
+
+/* Estilo para los ListView */
+.list-view {
+    -fx-padding: 10px; /* Padding interior */
+}
+
+/* Estilo para los TextField y TextArea */
+.text-field, .text-area {
+    -fx-padding: 5px; /* Padding interior */
+}
+
+/* Estilo para el ChoiceBox */
+.choice-box {
+    -fx-padding: 5px; /* Padding interior */
+}

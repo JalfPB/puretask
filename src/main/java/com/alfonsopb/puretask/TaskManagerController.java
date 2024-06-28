@@ -32,17 +32,25 @@ public class TaskManagerController {
     private TextField titleField;
     @FXML
     private TextArea descriptionField;
+    @FXML
+    private ChoiceBox<Category> categoryChoiceBox;
+    @FXML
+    private TextField newCategoryField;
 
     private TaskDAO taskDAO = new TaskDAO();
+    private CategoryDAO categoryDAO = new CategoryDAO();
     private ObservableList<Task> allTasksList = FXCollections.observableArrayList();
     private ObservableList<Task> completedTasksList = FXCollections.observableArrayList();
     private ObservableList<Task> incompletedTasksList = FXCollections.observableArrayList();
+    private ObservableList<Category> categoryList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
         allTasksListView.setItems(allTasksList);
         completedTasksListView.setItems(completedTasksList);
         incompletedTasksListView.setItems(incompletedTasksList);
+        
+        categoryChoiceBox.setItems(categoryList);
 
         allTasksListView.setCellFactory(param -> new ListCell<Task>() {
             @Override
@@ -106,7 +114,16 @@ public class TaskManagerController {
             }
         });
 
+        loadCategories();
         loadTasks();
+    }
+    
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private void loadTasks() {
@@ -119,11 +136,30 @@ public class TaskManagerController {
     private void handleAddTask() {
         String title = titleField.getText();
         String description = descriptionField.getText();
-        Task task = new Task(0, title, description, false);
-        taskDAO.addTask(task);
-        loadTasks();
-        titleField.clear();
-        descriptionField.clear();
+        Category selectedCategory = categoryChoiceBox.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null) {
+            int categoryId = selectedCategory.getId();
+            Task task = new Task(0, title, description, false, categoryId);
+            taskDAO.addTask(task);
+            loadTasks();
+            titleField.clear();
+            descriptionField.clear();
+        } else {
+            showAlert("No Category Selected", "Please select a category for the task.");
+        }
+    }
+    
+    @FXML
+    private void handleAddCategory() {
+        String categoryName = newCategoryField.getText();
+        if (!categoryName.isEmpty()) {
+            Category category = new Category(0, categoryName);
+            categoryDAO.addCategory(category);
+            loadCategories();
+            newCategoryField.clear();
+        } else {
+            showAlert("Empty Category", "Please enter a name for the new category.");
+        }
     }
 
     @FXML
@@ -185,6 +221,10 @@ public class TaskManagerController {
         alert.setHeaderText(null);
         alert.setContentText("Please select a task to view its details.");
         alert.showAndWait();
+    }
+    
+    private void loadCategories() {
+        categoryList.setAll(categoryDAO.getAllCategories());
     }
     
     @FXML

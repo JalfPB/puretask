@@ -3,22 +3,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
+<?import java.net.*?>
+<?import javafx.scene.layout.HBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alfonsopb.puretask.TaskManagerController">
-    <TabPane>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alfonsopb.puretask.TaskManagerController" styleClass="main-vbox">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+    <TabPane styleClass="tab-pane">
         <Tab text="All Tasks">
             <VBox spacing="10">
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
-                <ListView fx:id="allTasksListView" />
-                <TextField fx:id="titleField" promptText="Title" />
-                <TextArea fx:id="descriptionField" promptText="Description" />
-                <Button text="Add Task" onAction="#handleAddTask" />
-                <Button text="Complete Task" onAction="#handleCompleteTask" />
-                <Button text="Edit Task" onAction="#handleEditTask" />
-                <Button text="Delete Task" onAction="#handleDeleteTask" />
-                <Button text="Show Details" onAction="#handleShowTaskDetails" />
+                <ListView fx:id="allTasksListView" styleClass="list-view" />
+
+                <!-- Campos de entrada -->
+                <HBox spacing="10">
+                    <TextField fx:id="titleField" promptText="Title" styleClass="text-field" />
+                    <TextArea fx:id="descriptionField" promptText="Description" styleClass="text-area" />
+                    <ChoiceBox fx:id="categoryChoiceBox" styleClass="choice-box"/>
+                </HBox>
+
+                <!-- Botones -->
+                <HBox spacing="10">
+                    <Button text="Add Task" onAction="#handleAddTask" styleClass="button" />
+                    <TextField fx:id="newCategoryField" promptText="New Category" styleClass="text-field" />
+                    <Button text="Add Category" onAction="#handleAddCategory" styleClass="button" />
+                    <Button text="Complete Task" onAction="#handleCompleteTask" styleClass="button" />
+                    <Button text="Edit Task" onAction="#handleEditTask" styleClass="button" />
+                    <Button text="Delete Task" onAction="#handleDeleteTask" styleClass="button" />
+                    <Button text="Show Details" onAction="#handleShowTaskDetails" styleClass="button" />
+                </HBox>
             </VBox>
         </Tab>
         <Tab text="Completed Tasks">
@@ -26,7 +42,7 @@
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
-                <ListView fx:id="completedTasksListView" />
+                <ListView fx:id="completedTasksListView" styleClass="list-view" />
             </VBox>
         </Tab>
         <Tab text="Incompleted Tasks">
@@ -34,9 +50,8 @@
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
-                <ListView fx:id="incompletedTasksListView" />
+                <ListView fx:id="incompletedTasksListView" styleClass="list-view" />
             </VBox>
         </Tab>
     </TabPane>
 </VBox>
-

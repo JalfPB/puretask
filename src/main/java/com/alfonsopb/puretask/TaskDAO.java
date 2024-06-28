@@ -31,7 +31,8 @@ public class TaskDAO {
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getBoolean("completed")
+                        rs.getBoolean("completed"),
+                        rs.getInt("category_id")
                 );
                 tasks.add(task);
             }
@@ -43,7 +44,7 @@ public class TaskDAO {
     }
 
     public void addTask(Task task) {
-        String sql = "INSERT INTO tasks(title, description, completed) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO tasks(title, description, completed, category_id) VALUES(?, ?, ?, ?)";
 
         try (Connection conn = Database.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -51,6 +52,7 @@ public class TaskDAO {
             pstmt.setString(1, task.getTitle());
             pstmt.setString(2, task.getDescription());
             pstmt.setBoolean(3, task.isCompleted());
+            pstmt.setInt(4, task.getCategoryId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -86,7 +88,8 @@ public class TaskDAO {
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getBoolean("completed")
+                        rs.getBoolean("completed"),
+                        rs.getInt("category_id")
                 );
                 tasks.add(task);
             }
@@ -110,7 +113,8 @@ public class TaskDAO {
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getBoolean("completed")
+                        rs.getBoolean("completed"),
+                        rs.getInt("category_id")
                 );
                 tasks.add(task);
             }
