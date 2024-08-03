@@ -1,7 +1,14 @@
 package com.alfonsopb.puretask;
 
+import java.io.IOException;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -10,6 +17,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.scene.control.ListCell;
+import javafx.stage.Stage;
 
 public class KanbanBoardController {
     @FXML
@@ -141,6 +149,51 @@ public class KanbanBoardController {
             listView.setStyle("");
             event.consume();
         });
+    }
+    
+    public void handleShowTaskDetails(ActionEvent event) {
+    Task selectedTask = getSelectedTask();
+    if (selectedTask != null) {
+        showTaskDetails(selectedTask);
+    } else {
+        showNoTaskSelectedDialog();
+    }
+}
+    
+    private Task getSelectedTask() {
+    if (toDoListView.getSelectionModel().getSelectedItem() != null) {
+        return toDoListView.getSelectionModel().getSelectedItem();
+    } else if (inProgressListView.getSelectionModel().getSelectedItem() != null) {
+        return inProgressListView.getSelectionModel().getSelectedItem();
+    } else if (doneListView.getSelectionModel().getSelectedItem() != null) {
+        return doneListView.getSelectionModel().getSelectedItem();
+    }
+    return null;
+}
+
+    private void showTaskDetails(Task task) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("taskDetails.fxml"));
+            Parent root = loader.load();
+
+            TaskDetailsController controller = loader.getController();
+            controller.setTask(task);
+
+            Stage stage = new Stage();
+            stage.setTitle("Task Details");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showNoTaskSelectedDialog() {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("No Task Selected");
+        alert.setHeaderText(null);
+        alert.setContentText("Please select a task to view its details.");
+        alert.showAndWait();
     }
 
     private void refreshLists() {
