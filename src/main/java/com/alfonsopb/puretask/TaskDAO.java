@@ -32,7 +32,8 @@ public class TaskDAO {
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getBoolean("completed"),
-                        rs.getInt("category_id")
+                        rs.getInt("category_id"),
+                        rs.getString("status")
                 );
                 tasks.add(task);
             }
@@ -44,36 +45,38 @@ public class TaskDAO {
     }
 
     public void addTask(Task task) {
-        String sql = "INSERT INTO tasks(title, description, completed, category_id) VALUES(?, ?, ?, ?)";
+    String sql = "INSERT INTO tasks(title, description, completed, category_id, status) VALUES(?, ?, ?, ?, ?)";
 
-        try (Connection conn = Database.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    try (Connection conn = Database.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, task.getTitle());
-            pstmt.setString(2, task.getDescription());
-            pstmt.setBoolean(3, task.isCompleted());
-            pstmt.setInt(4, task.getCategoryId());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        pstmt.setString(1, task.getTitle());
+        pstmt.setString(2, task.getDescription());
+        pstmt.setBoolean(3, task.isCompleted());
+        pstmt.setInt(4, task.getCategoryId());
+        pstmt.setString(5, task.getStatus()); // Add status
+        pstmt.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
     }
+}
 
     public void updateTask(Task task) {
-        String sql = "UPDATE tasks SET title = ?, description = ?, completed = ? WHERE id = ?";
+    String sql = "UPDATE tasks SET title = ?, description = ?, completed = ?, status = ? WHERE id = ?";
 
-        try (Connection conn = Database.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    try (Connection conn = Database.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, task.getTitle());
-            pstmt.setString(2, task.getDescription());
-            pstmt.setBoolean(3, task.isCompleted());
-            pstmt.setInt(4, task.getId());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        pstmt.setString(1, task.getTitle());
+        pstmt.setString(2, task.getDescription());
+        pstmt.setBoolean(3, task.isCompleted());
+        pstmt.setString(4, task.getStatus()); // Add status update
+        pstmt.setInt(5, task.getId());
+        pstmt.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
     }
+}
     
     public List<Task> getCompletedTasks() {
         List<Task> tasks = new ArrayList<>();
@@ -89,7 +92,8 @@ public class TaskDAO {
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getBoolean("completed"),
-                        rs.getInt("category_id")
+                        rs.getInt("category_id"),
+                        rs.getString("status")
                 );
                 tasks.add(task);
             }
@@ -114,7 +118,8 @@ public class TaskDAO {
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getBoolean("completed"),
-                        rs.getInt("category_id")
+                        rs.getInt("category_id"),
+                        rs.getString("status")
                 );
                 tasks.add(task);
             }
@@ -136,5 +141,59 @@ public class TaskDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    public List<Task> getTasksByStatus(String status) {
+        List<Task> tasks = new ArrayList<>();
+        String sql = "SELECT * FROM tasks WHERE status = ?";
+
+        try (Connection conn = Database.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, status);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Task task = new Task(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getBoolean("completed"),
+                        rs.getInt("category_id"),
+                        rs.getString("status")
+                );
+                tasks.add(task);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return tasks;
+    }
+    
+    public Task getTaskById(int id) {
+        String sql = "SELECT * FROM tasks WHERE id = ?";
+        Task task = null;
+
+        try (Connection conn = Database.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                task = new Task(
+                    rs.getInt("id"),
+                    rs.getString("title"),
+                    rs.getString("description"),
+                    rs.getBoolean("completed"),
+                    rs.getInt("category_id"),
+                    rs.getString("status")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return task;
     }
 }

@@ -34,6 +34,7 @@ public class Database {
                                 + " description TEXT,\n"
                                 + " completed BOOLEAN,\n"
                                 + " category_id INTEGER,\n"
+                                + " status TEXT DEFAULT 'To Do',\n"
                                 + " FOREIGN KEY (category_id) REFERENCES categories(id)\n"
                                 + ");";
 

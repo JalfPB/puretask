@@ -34,6 +34,7 @@
                     <Button text="Edit Task" onAction="#handleEditTask" styleClass="button" />
                     <Button text="Delete Task" onAction="#handleDeleteTask" styleClass="button" />
                     <Button text="Show Details" onAction="#handleShowTaskDetails" styleClass="button" />
+                     <Button text="Show Kanban Board" onAction="#handleShowKanbanBoard"/>
                 </HBox>
             </VBox>
         </Tab>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alfonsopb.puretask.KanbanBoardController">
+    <VBox>
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <HBox spacing="20">
+            <VBox fx:id="toDoColumn" prefWidth="200">
+                <Label text="To Do" style="-fx-font-size: 16px;"/>
+                <ListView fx:id="toDoListView"/>
+            </VBox>
+            <VBox fx:id="inProgressColumn" prefWidth="200">
+                <Label text="In Progress" style="-fx-font-size: 16px;"/>
+                <ListView fx:id="inProgressListView"/>
+            </VBox>
+            <VBox fx:id="doneColumn" prefWidth="200">
+                <Label text="Done" style="-fx-font-size: 16px;"/>
+                <ListView fx:id="doneListView"/>
+            </VBox>
+        </HBox>
+    </VBox>
+</AnchorPane>

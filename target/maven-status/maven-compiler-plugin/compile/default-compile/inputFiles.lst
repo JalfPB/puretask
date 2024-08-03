@@ -1,11 +1,13 @@
 C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\CategoryDAO.java
 C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\TaskManagerController.java
-C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\SecondaryController.java
-C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\TaskDetailsController.java
 C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\TaskDAO.java
-C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\PrimaryController.java
 C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\Category.java
 C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\App.java
 C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\Database.java
-C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\module-info.java
 C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\Task.java
+C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\KanbanBoardController.java
+C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\SecondaryController.java
+C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\TaskDetailsController.java
+C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\TaskCell.java
+C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\com\alfonsopb\puretask\PrimaryController.java
+C:\Users\Alfon\Documents\NetBeansProjects\puretask\src\main\java\module-info.java

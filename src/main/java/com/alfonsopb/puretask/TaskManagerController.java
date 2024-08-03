@@ -5,6 +5,7 @@
 package com.alfonsopb.puretask;
 
 import java.io.IOException;
+import java.io.InputStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -45,78 +50,120 @@ public class TaskManagerController {
     private ObservableList<Category> categoryList = FXCollections.observableArrayList();
 
     @FXML
-    public void initialize() {
-        allTasksListView.setItems(allTasksList);
-        completedTasksListView.setItems(completedTasksList);
-        incompletedTasksListView.setItems(incompletedTasksList);
-        
-        categoryChoiceBox.setItems(categoryList);
+public void initialize() {
+    allTasksListView.setItems(allTasksList);
+    completedTasksListView.setItems(completedTasksList);
+    incompletedTasksListView.setItems(incompletedTasksList);
+    //WARNING
+    allTasksListView.setCellFactory(param -> new TaskCell());
+    completedTasksListView.setCellFactory(param -> new TaskCell());
+    incompletedTasksListView.setCellFactory(param -> new TaskCell());
+    
+    categoryChoiceBox.setItems(categoryList);
 
-        allTasksListView.setCellFactory(param -> new ListCell<Task>() {
-            @Override
-            protected void updateItem(Task task, boolean empty) {
-                super.updateItem(task, empty);
-                if (empty || task == null || task.getTitle() == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    Text text = new Text(task.getTitle());
-                    if (task.isCompleted()) {
-                        text.setFill(Color.GRAY);
-                        text.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 12));
-                    } else {
-                        text.setFill(Color.BLACK);
-                        text.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 12));
-                    }
-                    setGraphic(text);
-                }
-            }
-        });
-
-        completedTasksListView.setCellFactory(param -> new ListCell<Task>() {
-            @Override
-            protected void updateItem(Task task, boolean empty) {
-                super.updateItem(task, empty);
-                if (empty || task == null || task.getTitle() == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    Text text = new Text(task.getTitle());
+    allTasksListView.setCellFactory(param -> new ListCell<Task>() {
+        @Override
+        protected void updateItem(Task task, boolean empty) {
+            super.updateItem(task, empty);
+            if (empty || task == null || task.getTitle() == null) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                HBox hbox = new HBox();
+                hbox.setSpacing(10);
+                Text text = new Text(task.getTitle());
+                if (task.isCompleted()) {
                     text.setFill(Color.GRAY);
                     text.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 12));
-                    setGraphic(text);
-                }
-            }
-        });
-        
-        incompletedTasksListView.setCellFactory(param -> new ListCell<Task>() {
-            @Override
-            protected void updateItem(Task task, boolean empty) {
-                super.updateItem(task, empty);
-                if (empty || task == null || task.getTitle() == null) {
-                    setText(null);
-                    setGraphic(null);
+                    
+                    // Load the image
+                    try (InputStream is = getClass().getResourceAsStream("/images/tick.png")) {
+                        if (is == null) {
+                            System.err.println("Could not load image /images/tick.png");
+                            return;
+                        }
+                        ImageView imageView = new ImageView(new Image(is));
+                        imageView.setFitHeight(16);
+                        imageView.setFitWidth(16);
+                        hbox.getChildren().addAll(imageView, text);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    Text text = new Text(task.getTitle());
                     text.setFill(Color.BLACK);
-                    text.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 12));
-                    setGraphic(text);
+                    text.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 12));
+                    hbox.getChildren().add(text);
                 }
+                setGraphic(hbox);
             }
-        });
-        
-        allTasksListView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                Task selectedTask = allTasksListView.getSelectionModel().getSelectedItem();
-                if (selectedTask != null) {
-                    showTaskDetails(selectedTask);
-                }
-            }
-        });
+        }
+    });
 
-        loadCategories();
-        loadTasks();
-    }
+    completedTasksListView.setCellFactory(param -> new ListCell<Task>() {
+        @Override
+        protected void updateItem(Task task, boolean empty) {
+            super.updateItem(task, empty);
+            if (empty || task == null || task.getTitle() == null) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                HBox hbox = new HBox();
+                hbox.setSpacing(10);
+                Text text = new Text(task.getTitle());
+                text.setFill(Color.GRAY);
+                text.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 12));
+                
+                // Load the image
+                try (InputStream is = getClass().getResourceAsStream("/images/tick.png")) {
+                    if (is == null) {
+                        System.err.println("Could not load image /images/tick.png");
+                        return;
+                    }
+                    ImageView imageView = new ImageView(new Image(is));
+                    imageView.setFitHeight(16);
+                    imageView.setFitWidth(16);
+                    hbox.getChildren().addAll(imageView, text);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                setGraphic(hbox);
+            }
+        }
+    });
+
+    incompletedTasksListView.setCellFactory(param -> new ListCell<Task>() {
+        @Override
+        protected void updateItem(Task task, boolean empty) {
+            super.updateItem(task, empty);
+            if (empty || task == null || task.getTitle() == null) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                HBox hbox = new HBox();
+                hbox.setSpacing(10);
+                Text text = new Text(task.getTitle());
+                text.setFill(Color.BLACK);
+                text.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 12));
+                hbox.getChildren().add(text);
+                setGraphic(hbox);
+            }
+        }
+    });
+    
+    allTasksListView.setOnMouseClicked(event -> {
+        if (event.getClickCount() == 2) {
+            Task selectedTask = allTasksListView.getSelectionModel().getSelectedItem();
+            if (selectedTask != null) {
+                showTaskDetails(selectedTask);
+            }
+        }
+    });
+
+    loadCategories();
+    loadTasks();
+}
+
+
     
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -139,7 +186,7 @@ public class TaskManagerController {
         Category selectedCategory = categoryChoiceBox.getSelectionModel().getSelectedItem();
         if (selectedCategory != null) {
             int categoryId = selectedCategory.getId();
-            Task task = new Task(0, title, description, false, categoryId);
+            Task task = new Task(0, title, description, false, categoryId, "To Do");
             taskDAO.addTask(task);
             loadTasks();
             titleField.clear();
@@ -234,6 +281,21 @@ public class TaskManagerController {
             showTaskDetails(selectedTask);
         } else {
             showNoTaskSelectedDialog();
+        }
+    }
+    
+    @FXML
+    private void handleShowKanbanBoard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("kanbanBoard.fxml"));
+            AnchorPane kanbanBoardRoot = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Kanban Board");
+            stage.setScene(new Scene(kanbanBoardRoot));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

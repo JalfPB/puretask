@@ -14,13 +14,15 @@ public class Task {
     private String description;
     private boolean completed;
     private int categoryId;
+    private String status;
 
-    public Task(int id, String title, String description, boolean completed,int categoryId) {
+    public Task(int id, String title, String description, boolean completed,int categoryId, String status) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.completed = completed;
         this.categoryId = categoryId;
+        this.status = status;
     }
 
     public int getId() {
@@ -61,6 +63,14 @@ public class Task {
 
     public int getCategoryId() {
         return categoryId;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
